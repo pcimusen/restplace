@@ -691,6 +691,7 @@
         <div class="about-left fade-in">
           <img class="about-photo" src="Dekachinpo.png" alt="代表取締役" />
           <p class="about-president-name">
+            <span>株式会社RESTPLACE</span>
             <span>代表取締役</span>
             大島 孝晴
           </p>
@@ -874,8 +875,10 @@
         slides[next].classList.replace('slide-next', 'slide-current');
 
         exiting.addEventListener('transitionend', function onEnd() {
+          exiting.style.transition = 'none';
           exiting.classList.replace('slide-exit', 'slide-next');
           void exiting.offsetWidth;
+          exiting.style.transition = '';
         }, { once: true });
 
         current = next;
