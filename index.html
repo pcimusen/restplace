@@ -869,15 +869,13 @@
 
       function advance() {
         const next = (current + 1) % slides.length;
-        slides[current].classList.replace('slide-current', 'slide-exit');
+        const exiting = slides[current];
+        exiting.classList.replace('slide-current', 'slide-exit');
         slides[next].classList.replace('slide-next', 'slide-current');
 
-        // after transition, reset exited slide to next position
-        slides[current].addEventListener('transitionend', function onEnd() {
-          slides[current].removeEventListener('transitionend', onEnd);
-          slides[current].classList.replace('slide-exit', 'slide-next');
-          // force reflow so next position is applied before next cycle
-          void slides[current].offsetWidth;
+        exiting.addEventListener('transitionend', function onEnd() {
+          exiting.classList.replace('slide-exit', 'slide-next');
+          void exiting.offsetWidth;
         }, { once: true });
 
         current = next;
