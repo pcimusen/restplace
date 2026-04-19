@@ -614,12 +614,12 @@
       box-shadow: 6px 6px 28px rgba(249,95,0,0.45);
     }
     .home-btn.shrink {
-      width: 56px;
-      height: 56px;
+      width: 64px;
+      height: 64px;
       border-radius: 0 0 16px 0;
       box-shadow: 2px 2px 10px rgba(249,95,0,0.25);
     }
-    .home-btn.shrink img { width: 40px; height: 40px; }
+    .home-btn.shrink img { width: 46px; height: 46px; }
     .home-btn img {
       width: 150px;
       height: 150px;
@@ -934,26 +934,28 @@
     );
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Nav scroll behavior
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    });
-
-    // Hamburger menu
+    // Nav + home button scroll / menu behavior
+    const nav     = document.getElementById('nav');
     const toggle  = document.getElementById('nav-toggle');
     const links   = document.getElementById('nav-links');
     const homeBtn = document.querySelector('.home-btn');
+
+    function updateHomeBtn() {
+      const scrolled = window.scrollY > 40;
+      nav.classList.toggle('scrolled', scrolled);
+      homeBtn.classList.toggle('shrink', scrolled || links.classList.contains('open'));
+    }
+    window.addEventListener('scroll', updateHomeBtn);
     toggle.addEventListener('click', () => {
       toggle.classList.toggle('open');
       links.classList.toggle('open');
-      homeBtn.classList.toggle('shrink', links.classList.contains('open'));
+      updateHomeBtn();
     });
     links.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         toggle.classList.remove('open');
         links.classList.remove('open');
-        homeBtn.classList.remove('shrink');
+        updateHomeBtn();
       });
     });
   </script>
