@@ -607,16 +607,24 @@
       justify-content: center;
       text-decoration: none;
       box-shadow: 4px 4px 20px rgba(249,95,0,0.35);
-      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s;
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s, width 0.3s cubic-bezier(0.16,1,0.3,1), height 0.3s cubic-bezier(0.16,1,0.3,1), border-radius 0.3s;
     }
     .home-btn:hover {
       transform: scale(1.04);
       box-shadow: 6px 6px 28px rgba(249,95,0,0.45);
     }
+    .home-btn.shrink {
+      width: 56px;
+      height: 56px;
+      border-radius: 0 0 16px 0;
+      box-shadow: 2px 2px 10px rgba(249,95,0,0.25);
+    }
+    .home-btn.shrink img { width: 40px; height: 40px; }
     .home-btn img {
       width: 150px;
       height: 150px;
       object-fit: contain;
+      transition: width 0.3s cubic-bezier(0.16,1,0.3,1), height 0.3s cubic-bezier(0.16,1,0.3,1);
     }
     /* hide the nav logo since home-btn takes over */
     .nav-logo { display: none; }
@@ -933,16 +941,19 @@
     });
 
     // Hamburger menu
-    const toggle = document.getElementById('nav-toggle');
-    const links  = document.getElementById('nav-links');
+    const toggle  = document.getElementById('nav-toggle');
+    const links   = document.getElementById('nav-links');
+    const homeBtn = document.querySelector('.home-btn');
     toggle.addEventListener('click', () => {
       toggle.classList.toggle('open');
       links.classList.toggle('open');
+      homeBtn.classList.toggle('shrink', links.classList.contains('open'));
     });
     links.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
         toggle.classList.remove('open');
         links.classList.remove('open');
+        homeBtn.classList.remove('shrink');
       });
     });
   </script>
